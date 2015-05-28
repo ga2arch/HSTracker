@@ -26,8 +26,8 @@ struct Match {
     id: isize,
     deck: String,
     opponent: String,
-    result: Result,
-    kind: Kind,
+    result: MatchResult,
+    kind: MatchType,
 }
 
 impl Match {
@@ -35,19 +35,19 @@ impl Match {
         Match { id: id,
                 deck: String::new(),
                 opponent: String::new(),
-                result: Result::Win,
-                kind: Kind::Casual }
+                result: MatchResult::Win,
+                kind: MatchType::Casual }
     }
 }
 
 #[derive(Debug)]
-enum Result {
+enum MatchResult {
     Win,
     Loss,
 }
 
 #[derive(Debug)]
-enum Kind {
+enum MatchType {
     Ranked,
     Casual,
     Friendly,
@@ -57,7 +57,7 @@ fn parse_seasons(map: &Vec<(YamlStandardData, YamlStandardData)>) -> Result<Vec<
     let mut seasons: Vec<Season> = Vec::new();
 
     match map.as_slice() {
-        [(YamlString(ref name), YamlMapping(ref content))] => {
+        [(YamlString(ref name), YamlMapping(ref map))] => {
             let mut matches: Vec<Match>  = Vec::new();
 
             for m in map.as_slice() {
@@ -75,17 +75,20 @@ fn parse_seasons(map: &Vec<(YamlStandardData, YamlStandardData)>) -> Result<Vec<
             let season_num = temp[1].to_string().parse::<isize>().unwrap();
 
             seasons.push(Season::new(season_num, matches));
-        }
+            Ok(seasons)
+        },
+
+        _ => Err("Error"),
     }
 
-    Ok(seasons)
+
 }
 
 fn parse_match(id: isize, map: &Vec<(YamlStandardData, YamlStandardData)>) -> Result<Match, &'static str> {
     let mut m = Match::new(id);
 
-    for m in map.as_slice() {
-        match map {
+    for e in map.as_slice() {
+        match e {
             &(YamlString(ref key), YamlString(ref value)) =>
 
                 match key.as_str() {
@@ -93,16 +96,16 @@ fn parse_match(id: isize, map: &Vec<(YamlStandardData, YamlStandardData)>) -> Re
                     "opponent" => m.opponent = value.to_string(),
                     "result"   =>
                         match value.as_str() {
-                            "Win"  => m.result = Result::Win,
-                            "Loss" => m.result = Result::Loss,
-                            _      => Err("Unknown result"),
+                            "Win"  => m.result = MatchResult::Win,
+                            "Loss" => m.result = MatchResult::Loss,
+                            _      => continue,
                         },
                     "type"     =>
                         match value.as_str() {
-                            "Ranked"   => m.kind = Kind::Ranked,
-                            "Casual"   => m.kind = Kind::Casual,
-                            "Friendly" => m.kind = Kind::Friendly,
-                            _          => Err("Unknown match type"),
+                            "Ranked"   => m.kind = MatchType::Ranked,
+                            "Casual"   => m.kind = MatchType::Casual,
+                            "Friendly" => m.kind = MatchType::Friendly,
+                            _          => continue,
                         },
                     _ => continue,
                 },
@@ -114,15 +117,16 @@ fn parse_match(id: isize, map: &Vec<(YamlStandardData, YamlStandardData)>) -> Re
     Ok(m)
 }
 
-fn parse(doc: Vec<YamlStandardData>) -> Vec<Season> {
-
+fn parse(data: Vec<YamlStandardData>) -> Result<Vec<Season>, &'static str> {
     for doc in data.iter() {
         match doc {
-            &YamlMapping(ref map) => parse_seasons(map),
+            &YamlMapping(ref map) => return parse_seasons(map),
 
-            _ => panic!("Error"),
+            _ => return Err("No docs"),
         }
     }
+
+    Err("No docs")
 }
 
 fn main() {
@@ -131,69 +135,7 @@ fn main() {
     let mut reader = BufReader::new(File::open(path).unwrap());
     let data = yaml::parse_io_utf8(&mut reader).unwrap();
 
-    let mut seasons: Vec<Season> = Vec::new();
-
-    match data.first().unwrap() {
-
-        &YamlMapping(ref content) =>
-
-            match content.as_slice() {
-                [(YamlString(ref name), YamlMapping(ref content))] => {
-                    let mut matches: Vec<Match>  = Vec::new();
-
-                    for e in content.as_slice() {
-
-                        match e {
-                            &(YamlInteger(ref id), YamlMapping(ref content)) => {
-                                let mut m = Match::new(*id);
-
-                                for e in content.as_slice() {
-
-                                    match e {
-                                        &(YamlString(ref key), YamlString(ref value)) =>
-                                            match key.as_str() {
-                                                "deck"     => m.deck = value.to_string(),
-                                                "opponent" => m.opponent = value.to_string(),
-                                                "result"   =>
-                                                    match value.as_str() {
-                                                        "Win"  => m.result = Result::Win,
-                                                        "Loss" => m.result = Result::Loss,
-                                                        _      => continue,
-                                                    },
-                                                "type"     =>
-                                                    match value.as_str() {
-                                                        "Ranked"   => m.kind = Kind::Ranked,
-                                                        "Casual"   => m.kind = Kind::Casual,
-                                                        "Friendly" => m.kind = Kind::Friendly,
-                                                        _          => continue,
-                                                    },
-                                                _ => continue,
-                                            },
-
-                                        _ => continue
-                                    }
-                                }
-
-                                matches.push(m);
-                            },
-
-                            _ => continue,
-                        }
-
-                    }
-
-                    let s_name = name.to_string();
-                    let temp: Vec<&str> = s_name.split(' ').collect();
-                    let season_num = temp[1].to_string().parse::<isize>().unwrap();
-
-                    seasons.push(Season::new(season_num, matches));
-                },
-
-                _ => panic!("Error"),
-            },
-
-        _ => panic!("Error"),
-    }
+    let seasons = parse(data);
 
     println!("{:?}", seasons);
 
