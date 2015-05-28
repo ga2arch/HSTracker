@@ -5,6 +5,7 @@ extern crate yaml;
 
 use std::io::BufReader;
 use std::fs::File;
+use std::fmt;
 
 use yaml::constructor::*;
 use yaml::constructor::YamlStandardData::{YamlMapping, YamlString, YamlInteger};
@@ -20,6 +21,8 @@ impl Season {
         Season { num: num, matches: matches }
     }
 }
+
+impl fm
 
 #[derive(Debug)]
 struct Match {
@@ -37,6 +40,16 @@ impl Match {
                 opponent: String::new(),
                 result: MatchResult::Win,
                 kind: MatchType::Casual }
+    }
+}
+
+impl fmt::Display for Season {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        writeln!(f, "Season {}", self.num);
+
+        for m in self.matches {
+            writeln!(f, "\t{} vs {} {} {})", m.deck, m.opponent, m.type, m.result);
+        }
     }
 }
 
