@@ -42,12 +42,13 @@ impl Match {
 
 impl fmt::Display for Season {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        writeln!(f, "Season {}", self.num);
+        let mut result = vec![format!("Season {}", self.num)];
 
         for m in &self.matches {
-            writeln!(f, "  {} vs {} \t{} {}", m.deck, m.opponent, m.kind, m.result);
+            result.push(format!(" {}) {} vs {} \t{} {}", m.id, m.deck, m.opponent, m.result, m.kind));
         }
-        write!(f, "")
+
+        writeln!(f, "{}", result.connect("\n"))
     }
 }
 
