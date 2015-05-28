@@ -59,9 +59,9 @@ enum MatchResult {
 
 impl fmt::Display for MatchResult {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let s = match *self {
-            MatchResult::Win  => "Win",
-            MatchResult::Loss => "Loss",
+        let s = match self {
+            &MatchResult::Win  => "Win",
+            &MatchResult::Loss => "Loss",
         };
 
         write!(f, "{}", s)
@@ -76,10 +76,10 @@ enum MatchType {
 
 impl fmt::Display for MatchType {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let s = match *self {
-            MatchType::Ranked   => "Rankend",
-            MatchType::Casual   => "Casual",
-            MatchType::Friendly => "Friendly",
+        let s = match self {
+            &MatchType::Ranked   => "Rankend",
+            &MatchType::Casual   => "Casual",
+            &MatchType::Friendly => "Friendly",
         };
 
         write!(f, "{}", s)
