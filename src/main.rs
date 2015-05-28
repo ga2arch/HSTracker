@@ -10,7 +10,6 @@ use std::fmt;
 use yaml::constructor::*;
 use yaml::constructor::YamlStandardData::{YamlMapping, YamlString, YamlInteger};
 
-#[derive(Debug)]
 struct Season {
     num: isize,
     matches: Vec<Match>,
@@ -22,9 +21,7 @@ impl Season {
     }
 }
 
-impl fm
 
-#[derive(Debug)]
 struct Match {
     id: isize,
     deck: String,
@@ -47,23 +44,45 @@ impl fmt::Display for Season {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         writeln!(f, "Season {}", self.num);
 
-        for m in self.matches {
-            writeln!(f, "\t{} vs {} {} {})", m.deck, m.opponent, m.type, m.result);
+        for m in &self.matches {
+            writeln!(f, "  {} vs {} \t{} {}", m.deck, m.opponent, m.kind, m.result);
         }
+        write!(f, "")
     }
 }
 
-#[derive(Debug)]
 enum MatchResult {
     Win,
     Loss,
 }
 
-#[derive(Debug)]
+impl fmt::Display for MatchResult {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let s = match *self {
+            MatchResult::Win  => "Win",
+            MatchResult::Loss => "Loss",
+        };
+
+        write!(f, "{}", s)
+    }
+}
+
 enum MatchType {
     Ranked,
     Casual,
     Friendly,
+}
+
+impl fmt::Display for MatchType {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let s = match *self {
+            MatchType::Ranked   => "Rankend",
+            MatchType::Casual   => "Casual",
+            MatchType::Friendly => "Friendly",
+        };
+
+        write!(f, "{}", s)
+    }
 }
 
 fn parse_seasons(map: &Vec<(YamlStandardData, YamlStandardData)>) -> Result<Vec<Season>, &'static str> {
@@ -150,6 +169,8 @@ fn main() {
 
     let seasons = parse(data);
 
-    println!("{:?}", seasons);
+    for s in seasons.unwrap() {
+        println!("{}", s);
+    }
 
 }
