@@ -2,10 +2,14 @@
 #![feature(convert)]
 
 extern crate yaml;
+extern crate term;
 
+use std::io::prelude::*;
 use std::io::BufReader;
 use std::fs::File;
 use std::fmt;
+use std::env;
+use std::ascii::{AsciiExt, OwnedAsciiExt};
 
 use yaml::constructor::*;
 use yaml::constructor::YamlStandardData::{YamlMapping, YamlString, YamlInteger};
@@ -18,6 +22,31 @@ struct Season {
 impl Season {
     fn new(num: isize, matches: Vec<Match>) -> Season {
         Season { num: num, matches: matches }
+    }
+
+    fn winrate(&self) -> f32 {
+        let wins: Vec<&Match> = self.matches.iter()
+            .filter(|m| m.result == MatchResult::Win).collect();
+
+        let total   = self.matches.len() as f32;
+        let winrate = (wins.len() as f32) / total * 100.0;
+
+        winrate
+    }
+
+    fn winrate_by_deck(&self, name: &String, class: &String) -> f32 {
+        let deck = lowercase(&format!("{} {}", name, class));
+
+        let dms: Vec<&Match> = self.matches.iter()
+            .filter(|m| lowercase(&m.deck) == deck).collect();
+
+        let wins: Vec<&&Match> = dms.iter()
+            .filter(|m| m.result == MatchResult::Win).collect();
+
+        let total   = dms.len() as f32;
+        let winrate = (wins.len() as f32) / total * 100.0;
+
+        winrate
     }
 }
 
@@ -42,16 +71,30 @@ impl Match {
 
 impl fmt::Display for Season {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let mut result = vec![format!("Season {}", self.num)];
+        //let mut result = vec![];
+        writeln!(f, "{}", format!("Season {}", self.num));
+        let mut t = term::stdout().unwrap();
 
         for m in &self.matches {
-            result.push(format!(" {}) {} vs {} \t{} {}", m.id, m.deck, m.opponent, m.result, m.kind));
+            if (m.result == MatchResult:: Win) {
+                t.fg(term::color::GREEN).unwrap();
+            } else {
+                t.fg(term::color::RED).unwrap();
+            }
+            //result.push(
+            writeln!(f, "{}",
+                format!(" {}) {} vs {} \t\t{}",
+                    m.id, m.deck, m.opponent, m.kind));
+
+            t.reset().unwrap();
         }
 
-        writeln!(f, "{}", result.connect("\n"))
+        writeln!(f, "{}", "")
+        //.reset().unwrap();
     }
 }
 
+#[derive(PartialEq, Eq)]
 enum MatchResult {
     Win,
     Loss,
@@ -113,8 +156,19 @@ fn parse_seasons(map: &Vec<(YamlStandardData, YamlStandardData)>) -> Result<Vec<
 
         _ => Err("Error"),
     }
+}
 
+fn lowercase(s: &String) -> String {
+    s.chars().map(|c| c.to_lowercase().next().unwrap()).collect::<String>()
+}
 
+fn capitalize(s: &String) -> String {
+    s.chars().enumerate()
+        .map(|(i, c)| if (i == 0) {
+                c.to_uppercase().next().unwrap()
+            } else {
+                c.to_lowercase().next().unwrap()
+            } ).collect::<String>()
 }
 
 fn parse_match(id: isize, map: &Vec<(YamlStandardData, YamlStandardData)>) -> Result<Match, &'static str> {
@@ -125,8 +179,8 @@ fn parse_match(id: isize, map: &Vec<(YamlStandardData, YamlStandardData)>) -> Re
             &(YamlString(ref key), YamlString(ref value)) =>
 
                 match key.as_str() {
-                    "deck"     => m.deck = value.to_string(),
-                    "opponent" => m.opponent = value.to_string(),
+                    "deck"     => m.deck = value.trim().to_string(),
+                    "opponent" => m.opponent = value.trim().to_string(),
                     "result"   =>
                         match value.as_str() {
                             "Win"  => m.result = MatchResult::Win,
@@ -162,6 +216,8 @@ fn parse(data: Vec<YamlStandardData>) -> Result<Vec<Season>, &'static str> {
     Err("No docs")
 }
 
+
+
 fn main() {
     let path = "/Users/Gabriele/Dropbox/hearthstone.yaml";
 
@@ -172,6 +228,16 @@ fn main() {
 
     for s in seasons.unwrap() {
         println!("{}", s);
+
+        if (env::args().count() == 3) {
+            let name  = env::args().nth(1).unwrap();
+            let class = env::args().nth(2).unwrap();
+
+            println!("{} {} Winrate: {}%", capitalize(&name),
+                capitalize(&class), s.winrate_by_deck(&name, &class));
+        }
+
+        println!("Total Winrate: {}%", s.winrate());
     }
 
 }
