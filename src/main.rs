@@ -1,6 +1,6 @@
-#![feature(slice_patterns)]
-#![feature(convert)]
+#![feature(advanced_slice_patterns, slice_patterns, convert)]
 
+extern crate argparse;
 extern crate yaml;
 extern crate term;
 
@@ -9,10 +9,12 @@ use std::io::BufReader;
 use std::fs::File;
 use std::fmt;
 use std::env;
-use std::ascii::{AsciiExt, OwnedAsciiExt};
 
 use yaml::constructor::*;
 use yaml::constructor::YamlStandardData::{YamlMapping, YamlString, YamlInteger};
+
+use std::process::exit;
+use argparse::{ArgumentParser, StoreTrue, Store, List};
 
 struct Season {
     num: isize,
@@ -71,17 +73,15 @@ impl Match {
 
 impl fmt::Display for Season {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        //let mut result = vec![];
         writeln!(f, "{}", format!("Season {}", self.num));
         let mut t = term::stdout().unwrap();
 
         for m in &self.matches {
-            if (m.result == MatchResult:: Win) {
+            if m.result == MatchResult:: Win {
                 t.fg(term::color::GREEN).unwrap();
             } else {
                 t.fg(term::color::RED).unwrap();
             }
-            //result.push(
             writeln!(f, "{}",
                 format!(" {}) {} vs {} \t\t{}",
                     m.id, m.deck, m.opponent, m.kind));
@@ -90,7 +90,6 @@ impl fmt::Display for Season {
         }
 
         writeln!(f, "{}", "")
-        //.reset().unwrap();
     }
 }
 
@@ -168,7 +167,7 @@ fn capitalize(s: &String) -> String {
                 c.to_uppercase().next().unwrap()
             } else {
                 c.to_lowercase().next().unwrap()
-            } ).collect::<String>()
+            }).collect::<String>()
 }
 
 fn parse_match(id: isize, map: &Vec<(YamlStandardData, YamlStandardData)>) -> Result<Match, &'static str> {
@@ -216,28 +215,44 @@ fn parse(data: Vec<YamlStandardData>) -> Result<Vec<Season>, &'static str> {
     Err("No docs")
 }
 
-
-
 fn main() {
-    let path = "/Users/Gabriele/Dropbox/hearthstone.yaml";
+    let path = "hearthstone.yaml";
+
+    let mut args: Vec<String> = Vec::new();
+
+    {
+        let mut ap = ArgumentParser::new();
+        ap.set_description("Calc HS stats");
+        ap.refer(&mut args)
+            .add_argument("args", List,
+                          "Deck to calc winrate for");
+        ap.parse_args_or_exit();
+    }
 
     let mut reader = BufReader::new(File::open(path).unwrap());
     let data = yaml::parse_io_utf8(&mut reader).unwrap();
 
-    let seasons = parse(data);
+    let seasons = parse(data).unwrap();
 
-    for s in seasons.unwrap() {
-        println!("{}", s);
+    if args.len() >= 1 {
+        let season = seasons.last().unwrap();
 
-        if (env::args().count() == 3) {
-            let name  = env::args().nth(1).unwrap();
-            let class = env::args().nth(2).unwrap();
+        match args[0].as_str() {
+            "deck" => {
+                let deck   = &args[1..3];
+                let name   = deck[0].to_string();
+                let class  = deck[1].to_string();
 
-            println!("{} {} Winrate: {}%", capitalize(&name),
-                capitalize(&class), s.winrate_by_deck(&name, &class));
+                println!("{} {} Winrate: {}%", capitalize(&name),
+                    capitalize(&class), season.winrate_by_deck(&name, &class));
+            },
+
+            "show" => {
+                print!("{}", season);
+                println!("Total Winrate: {}%", season.winrate());
+            },
+
+            _ => println!("Command unknown"),
         }
-
-        println!("Total Winrate: {}%", s.winrate());
     }
-
 }
