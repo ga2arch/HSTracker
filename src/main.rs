@@ -34,7 +34,7 @@ impl Season {
         winrate
     }
 
-    fn winrate_by_deck(&self, name: &String, class: &String) -> f32 {
+    fn deck(&self, name: &String, class: &String) -> (Vec<&Match>, f32)  {
         let deck = lowercase(&format!("{} {}", name, class));
 
         let dms: Vec<&Match> = self.matches.iter()
@@ -46,10 +46,24 @@ impl Season {
         let total   = dms.len() as f32;
         let winrate = (wins.len() as f32) / total * 100.0;
 
-        winrate
+        (dms.clone(), winrate)
     }
 }
 
+impl fmt::Display for Season {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let mut t = term::stdout().unwrap();
+        writeln!(f, "{}", format!("Season {}", self.num));
+
+        for m in &self.matches {
+
+            writeln!(f, "{}", m);
+
+        }
+
+        writeln!(f, "{}", "")
+    }
+}
 
 struct Match {
     id: isize,
@@ -69,26 +83,23 @@ impl Match {
     }
 }
 
-impl fmt::Display for Season {
+impl fmt::Display for Match {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let mut t = term::stdout().unwrap();
-        writeln!(f, "{}", format!("Season {}", self.num));
 
-        for m in &self.matches {
-            if m.result == MatchResult:: Win {
-                t.fg(term::color::GREEN).unwrap();
-            } else {
-                t.fg(term::color::RED).unwrap();
-            }
-
-            writeln!(f, "{}",
-                format!(" {}) {} vs {} \t\t{}",
-                    m.id, m.deck, m.opponent, m.kind));
-
-            t.reset().unwrap();
+        if self.result == MatchResult:: Win {
+            t.fg(term::color::GREEN).unwrap();
+        } else {
+            t.fg(term::color::RED).unwrap();
         }
 
-        writeln!(f, "{}", "")
+        write!(f, "{}",
+            format!(" {}) {} vs {} \t\t{}",
+                self.id, self.deck, self.opponent, self.kind));
+
+        t.reset().unwrap();
+
+        write!(f, "{}", "")
     }
 }
 
@@ -240,8 +251,16 @@ fn main() {
                 let name   = deck[0].to_string();
                 let class  = deck[1].to_string();
 
-                println!("{} {} Winrate: {}%", capitalize(&name),
-                    capitalize(&class), season.winrate_by_deck(&name, &class));
+                let data = season.deck(&name, &class);
+
+                println!("Matches: ");
+
+                for m in &data.0 {
+                    println!("{}", m);
+                }
+
+                println!("\nMatches: {}", data.0.len());
+                println!("Winrate: {}%", data.1);
             },
 
             "show" => {
