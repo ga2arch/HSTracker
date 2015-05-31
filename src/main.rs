@@ -129,7 +129,7 @@ enum MatchType {
 impl fmt::Display for MatchType {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let s = match self {
-            &MatchType::Ranked   => "Rankend",
+            &MatchType::Ranked   => "Ranked",
             &MatchType::Casual   => "Casual",
             &MatchType::Friendly => "Friendly",
         };
@@ -138,9 +138,7 @@ impl fmt::Display for MatchType {
     }
 }
 
-fn parse_seasons(map: &Vec<(YamlStandardData, YamlStandardData)>) -> Result<Vec<Season>, &'static str> {
-    let mut seasons: Vec<Season> = Vec::new();
-
+fn parse_season(map: &Vec<(YamlStandardData, YamlStandardData)>) -> Result<Season, &'static str> {
     match map.as_slice() {
         [(YamlString(ref name), YamlMapping(ref map))] => {
             let mut matches: Vec<Match>  = Vec::new();
@@ -158,8 +156,8 @@ fn parse_seasons(map: &Vec<(YamlStandardData, YamlStandardData)>) -> Result<Vec<
             let temp: Vec<&str> = s_name.split(' ').collect();
             let season_num = temp[1].to_string().parse::<isize>().unwrap();
 
-            seasons.push(Season::new(season_num, matches));
-            Ok(seasons)
+
+            Ok(Season::new(season_num, matches))
         },
 
         _ => Err("Error"),
@@ -212,15 +210,18 @@ fn parse_match(id: isize, map: &Vec<(YamlStandardData, YamlStandardData)>) -> Ma
 }
 
 fn parse(data: Vec<YamlStandardData>) -> Result<Vec<Season>, &'static str> {
+    let mut seasons: Vec<Season> = Vec::new();
+
     for doc in data.iter() {
         match doc {
-            &YamlMapping(ref map) => return parse_seasons(map),
+            &YamlMapping(ref map) =>
+                seasons.push(parse_season(map).unwrap()),
 
             _ => return Err("No docs"),
         }
     }
 
-    Err("No docs")
+    Ok(seasons)
 }
 
 fn main() {
