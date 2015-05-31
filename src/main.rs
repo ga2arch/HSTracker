@@ -8,13 +8,11 @@ use std::io::prelude::*;
 use std::io::BufReader;
 use std::fs::File;
 use std::fmt;
-use std::env;
 
 use yaml::constructor::*;
 use yaml::constructor::YamlStandardData::{YamlMapping, YamlString, YamlInteger};
 
-use std::process::exit;
-use argparse::{ArgumentParser, StoreTrue, Store, List};
+use argparse::{ArgumentParser, List};
 
 struct Season {
     num: isize,
@@ -63,18 +61,18 @@ struct Match {
 
 impl Match {
     fn new(id: isize) -> Match {
-        Match { id: id,
-                deck: String::new(),
+        Match { id:       id,
+                deck:     String::new(),
                 opponent: String::new(),
-                result: MatchResult::Win,
-                kind: MatchType::Casual }
+                result:   MatchResult::Win,
+                kind:     MatchType::Casual }
     }
 }
 
 impl fmt::Display for Season {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        writeln!(f, "{}", format!("Season {}", self.num));
         let mut t = term::stdout().unwrap();
+        writeln!(f, "{}", format!("Season {}", self.num));
 
         for m in &self.matches {
             if m.result == MatchResult:: Win {
@@ -82,6 +80,7 @@ impl fmt::Display for Season {
             } else {
                 t.fg(term::color::RED).unwrap();
             }
+
             writeln!(f, "{}",
                 format!(" {}) {} vs {} \t\t{}",
                     m.id, m.deck, m.opponent, m.kind));
@@ -136,10 +135,9 @@ fn parse_seasons(map: &Vec<(YamlStandardData, YamlStandardData)>) -> Result<Vec<
             let mut matches: Vec<Match>  = Vec::new();
 
             for m in map.as_slice() {
-
                 match m {
                     &(YamlInteger(ref id), YamlMapping(ref content)) =>
-                        matches.push(parse_match(*id, content).unwrap()),
+                        matches.push(parse_match(*id, content)),
 
                     _ => continue,
                 }
@@ -163,22 +161,21 @@ fn lowercase(s: &String) -> String {
 
 fn capitalize(s: &String) -> String {
     s.chars().enumerate()
-        .map(|(i, c)| if (i == 0) {
+        .map(|(i, c)| if i == 0 {
                 c.to_uppercase().next().unwrap()
             } else {
                 c.to_lowercase().next().unwrap()
             }).collect::<String>()
 }
 
-fn parse_match(id: isize, map: &Vec<(YamlStandardData, YamlStandardData)>) -> Result<Match, &'static str> {
+fn parse_match(id: isize, map: &Vec<(YamlStandardData, YamlStandardData)>) -> Match {
     let mut m = Match::new(id);
 
     for e in map.as_slice() {
         match e {
             &(YamlString(ref key), YamlString(ref value)) =>
-
                 match key.as_str() {
-                    "deck"     => m.deck = value.trim().to_string(),
+                    "deck"     => m.deck     = value.trim().to_string(),
                     "opponent" => m.opponent = value.trim().to_string(),
                     "result"   =>
                         match value.as_str() {
@@ -200,7 +197,7 @@ fn parse_match(id: isize, map: &Vec<(YamlStandardData, YamlStandardData)>) -> Re
         }
     }
 
-    Ok(m)
+    m
 }
 
 fn parse(data: Vec<YamlStandardData>) -> Result<Vec<Season>, &'static str> {
