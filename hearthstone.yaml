@@ -1,0 +1,508 @@
+
+---
+
+Season 14:
+  1:
+    deck: Dragon Paladin
+    opponent: Mech Mage
+    result: Win
+    type: Casual
+    datetime: 2015-05-27 01:06:44
+
+  2:
+    deck: Dragon Paladin
+    opponent: Patron Warrior
+    result: Win
+    type: Casual
+    datetime: 2015-05-28 00:43:23
+
+  3:
+    deck: Zoo Warlock
+    opponent: Flamewaker Mage
+    result: Loss
+    type: Casual
+    datetime: 2015-05-28 20:59:15
+    comment: "Forgot to attack before playing a minion and triggering knife juggler
+              into the opponent boom bots that killed my juggler negating me lethal."
+
+  4:
+    deck: Zoo Warlock
+    opponent: Control Warrior
+    result: Loss
+    type: Casual
+    datetime: 2015-05-28 21:07:09
+
+  5:
+    deck: Dragon Paladin
+    opponent: Handlock Warlock
+    result: Loss
+    type: Casual
+    datetime: 2015-05-28 21:17:21
+    comment: "Play around shadowflame Sylvanas"
+
+  6:
+    deck: Dragon Paladin
+    opponent: Shockadin Paladin
+    result: Win
+    type: Casual
+    datetime: 2015-05-28 21:29:45
+
+  7:
+    deck: Dragon Paladin
+    opponent: Face Hunter
+    result: Loss
+    type: Casual
+    datetime: 2015-05-28 21:40:19
+
+  8:
+    deck: Dragon Paladin
+    opponent: Midrange Shaman
+    result: Win
+    type: Casual
+    datetime: 2015-05-28 21:51:58
+
+  9:
+    deck: Dragon Paladin
+    opponent: Control Priest
+    result: Loss
+    type: Casual
+    datetime: 2015-05-28 23:34:56
+
+  10:
+    deck: Dragon Paladin
+    opponent: Patron Warrior
+    result: Loss
+    type: Casual
+    datetime: 2015-05-28 23:45:12
+
+  11:
+    deck: Dragon Paladin
+    opponent: Zoo Warlock
+    result: Win
+    type: Casual
+    datetime: 2015-05-28 23:52:56
+
+  12:
+    deck: Dragon Paladin
+    opponent: Flamewaker Mage
+    result: Loss
+    type: Casual
+    datetime: 2015-05-28 23:58:40
+
+  13:
+    deck: Dragon Paladin
+    opponent: Taunt Druid
+    result: Win
+    type: Casual
+    datetime: 2015-05-29 00:09:04
+
+  14:
+    deck: Dragon Paladin
+    opponent: Demonlock Warlock
+    result: Win
+    type: Casual
+    datetime: 2015-05-29 00:20:10
+
+  15:
+    deck: Ramp Druid
+    opponent: Oil Rogue
+    result: Win
+    type: Casual
+    datetime: 2015-05-29 22:03:10
+
+  16:
+    deck: Ramp Druid
+    opponent: Hybrid Hunter
+    result: Win
+    type: Casual
+    datetime: 2015-05-29 22:12:42
+
+  17:
+    deck: Midrange Paladin
+    opponent: Oil Rogue
+    result: Win
+    type: Casual
+    datetime: 2015-05-30 13:14:20
+
+  18:
+    deck: Midrange Paladin
+    opponent: Zoo Warlock
+    result: Win
+    type: Casual
+    datetime: 2015-05-30 15:46:11
+
+  19:
+    deck: Midrange Paladin
+    opponent: Control Priest
+    result: Win
+    type: Casual
+    datetime: 2015-05-30 16:45:48
+
+  20:
+    deck: Midrange Paladin
+    opponent: Ramp Druid
+    result: Win
+    type: Casual
+    datetime: 2015-05-30 17:44:33
+
+  21:
+    deck: Midrange Paladin
+    opponent: Flamewaker Mage
+    result: Win
+    type: Casual
+    datetime: 2015-05-30 18:00:01
+
+  22:
+    deck: Midrange Paladin
+    opponent: Patron Warrior
+    result: Win
+    type: Casual
+    datetime: 2015-05-30 18:10:23
+
+  23:
+    deck: Midrange Paladin
+    opponent: Oil Rogue
+    result: Win
+    type: Casual
+    datetime: 2015-05-30 20:07:28
+
+  24:
+    deck: Handlock Warlock
+    opponent: Zoo Warlock
+    result: Win
+    type: Casual
+    datetime: 2015-05-31 01:51:05
+
+  25:
+    deck: Handlock Warlock
+    opponent: Zoo Warlock
+    result: Loss
+    type: Casual
+    datetime: 2015-05-31 11:58:37
+
+  26:
+    deck: Handlock Warlock
+    opponent: Midrange Shaman
+    result: Loss
+    type: Casual
+    datetime: 2015-05-31 12:06:57
+
+  27:
+    deck: Handlock Warlock
+    opponent: Ramp Druid
+    result: Win
+    type: Casual
+    datetime: 2015-05-31 12:22:03
+
+  28:
+    deck: Handlock Warlock
+    opponent: Control Priest
+    result: Loss
+    type: Casual
+    datetime: 2015-05-31 13:01:31
+
+  29:
+    deck: Handlock Warlock
+    opponent: Zoo Warlock
+    result: Loss
+    type: Casual
+    datetime: 2015-05-31 15:50:28
+
+  30:
+    deck: Handlock Warlock
+    opponent: Control Shaman
+    result: Win
+    type: Casual
+    datetime: 2015-05-31 16:01:14
+
+  31:
+    deck: Handlock Warlock
+    opponent: Fatigue Mage
+    result: Win
+    type: Casual
+    datetime: 2015-05-31 16:15:49
+
+  32:
+    deck: Handlock Warlock
+    opponent: Zoo Warlock
+    result: Win
+    type: Casual
+    datetime: 2015-05-31 18:40:53
+
+  33:
+    deck: Handlock Warlock
+    opponent: Patron Warrior
+    result: Loss
+    type: Casual
+    datetime: 2015-05-31 18:51:30
+    comment: "OTK-ed"
+
+  34:
+    deck: Handlock Warlock
+    opponent: Hybrid Hunter
+    result: Win
+    type: Casual
+    datetime: 2015-05-31 19:13:23
+
+  35:
+    deck: Handlock Warlock
+    opponent: Midrange Paladin
+    result: Win
+    type: Casual
+    datetime: 2015-05-31 19:33:46
+
+  36:
+    deck: Handlock Warlock
+    opponent: Control Warrior
+    result: Win
+    type: Casual
+    datetime: 2015-05-31 20:04:51
+
+  37:
+    deck: Handlock Warlock
+    opponent: Zoo Warlock
+    result: Loss
+    type: Casual
+    datetime: 2015-05-31 21:41:01
+
+  38:
+    deck: Handlock Warlock
+    opponent: Tempo Mage
+    result: Loss
+    type: Casual
+    datetime: 2015-05-31 21:45:29
+
+  39:
+    deck: Handlock Warlock
+    opponent: Control Priest
+    result: Win
+    type: Casual
+    datetime: 2015-05-31 21:53:43
+
+  40:
+    deck: Handlock Warlock
+    opponent: Face Hunter
+    result: Win
+    type: Casual
+    datetime: 2015-05-31 22:00:16
+
+  41:
+    deck: Handlock Warlock
+    opponent: Patron Warrior
+    result: Win
+    type: Casual
+    datetime: 2015-05-31 22:17:55
+
+  42:
+    deck: Handlock Warlock
+    opponent: Handlock Warlock
+    result: Win
+    type: Casual
+    datetime: 2015-05-31 23:02:18
+
+  43:
+    deck: Handlock Warlock
+    opponent: Patron Warrior
+    result: Win
+    type: Casual
+    datetime: 2015-05-31 23:13:39
+
+  44:
+    deck: Handlock Warlock
+    opponent: Oil Rogue
+    result: Loss
+    type: Casual
+    datetime: 2015-05-31 23:29:56
+
+  45:
+    deck: Handlock Warlock
+    opponent: Midrange Paladin
+    result: Loss
+    type: Casual
+    datetime: 2015-06-01 00:00:36
+
+---
+
+Season 15:
+  1:
+    deck: Handlock Warlock
+    opponent: Deathlord Priest
+    result: Win
+    type: Ranked
+    datetime: 2015-06-01 00:23:57
+
+  2:
+    deck: Handlock Warlock
+    opponent: Face Hunter
+    result: Win
+    type: Ranked
+    datetime: 2015-06-01 15:58:53
+
+  3:
+    deck: Handlock Warlock
+    opponent: Control Priest
+    result: Win
+    type: Ranked
+    datetime: 2015-06-01 20:13:53
+
+  4:
+    deck: Handlock Warlock
+    opponent: Mech Shaman
+    result: Win
+    type: Ranked
+    datetime: 2015-06-01 20:21:52
+
+  5:
+    deck: Handlock Warlock
+    opponent: Face Hunter
+    result: Win
+    type: Ranked
+    datetime: 2015-06-01 20:58:35
+
+  6:
+    deck: Handlock Warlock
+    opponent: Taunt Druid
+    result: Loss
+    type: Ranked
+    datetime: 2015-06-01 21:36:57
+
+  7:
+    deck: Handlock Warlock
+    opponent: Patron Warrior
+    result: Loss
+    type: Ranked
+    datetime: 2015-06-01 21:50:58
+
+  8:
+    deck: Handlock Warlock
+    opponent: Face Hunter
+    result: Loss
+    type: Ranked
+    datetime: 2015-06-01 21:55:59
+
+  9:
+    deck: Handlock Warlock
+    opponent: Demonlock Warlock
+    result: Win
+    type: Ranked
+    datetime: 2015-06-01 22:37:45
+
+  10:
+    deck: Handlock Warlock
+    opponent: Tempo Mage
+    result: Win
+    type: Ranked
+    datetime: 2015-06-01 23:18:38
+
+  11:
+    deck: Handlock Warlock
+    opponent: Ramp Druid
+    result: Loss
+    type: Ranked
+    datetime: 2015-06-01 23:48:06
+
+  12:
+    deck: Handlock Warlock
+    opponent: Control Paladin
+    result: Win
+    type: Ranked
+    datetime: 2015-06-02 00:03:42
+
+  13:
+    deck: Handlock Warlock
+    opponent: Majordomo Mage
+    result: Win
+    type: Ranked
+    datetime: 2015-06-02 01:15:53
+
+
+  14:
+    deck: Handlock Warlock
+    opponent: Patron Warrior
+    result: Win
+    type: Ranked
+    datetime: 2015-06-02 11:34:20
+
+  15:
+    deck: Handlock Warlock
+    opponent: Midrange Hunter
+    result: Loss
+    type: Ranked
+    datetime: 2015-06-02 13:25:19
+
+  16:
+    deck: Handlock Warlock
+    opponent: Patron Warrior
+    result: Loss
+    type: Ranked
+    datetime: 2015-06-02 13:30:33
+
+  17:
+    deck: Handlock Warlock
+    opponent: Demonlock Warlock
+    result: Win
+    type: Ranked
+    datetime: 2015-06-02 13:43:14
+
+  18:
+    deck: Handlock Warlock
+    opponent: Patron Warrior
+    result: Win
+    type: Ranked
+    datetime: 2015-06-02 14:31:17
+
+  19:
+    deck: Handlock Warlock
+    opponent: Face Hunter
+    result: Loss
+    type: Ranked
+    datetime: 2015-06-02 15:46:11
+
+  20:
+    deck: Handlock Warlock
+    opponent: Oil Rogue
+    result: Win
+    type: Ranked
+    datetime: 2015-06-02 15:54:47
+
+  21:
+    deck: Handlock Warlock
+    opponent: Mech Mage
+    result: Win
+    type: Ranked
+    datetime: 2015-06-02 16:08:04
+
+  22:
+    deck: Handlock Warlock
+    opponent: Patron Warrior
+    result: Win
+    type: Ranked
+    datetime: 2015-06-02 21:02:22
+
+  23:
+    deck: Handlock Warlock
+    opponent: Flamewaker Mage
+    result: Loss
+    type: Ranked
+    datetime: 2015-06-02 21:12:23
+
+  24:
+    deck: Handlock Warlock
+    opponent: Murlock Warlock
+    result: Loss
+    type: Ranked
+    datetime: 2015-06-02 21:16:41
+
+  25:
+    deck: Handlock Warlock
+    opponent: Control Paladin
+    result: Win
+    type: Ranked
+    datetime: 2015-06-02 21:28:05
+
+  26:
+    deck: Handlock Warlock
+    opponent: Dragon Warlock
+    result: Win
+    type: Ranked
+    datetime: 2015-06-03 00:34:07
