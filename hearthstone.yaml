@@ -506,3 +506,269 @@ Season 15:
     result: Win
     type: Ranked
     datetime: 2015-06-03 00:34:07
+
+  27:
+    deck: Handlock Warlock
+    opponent: Mech Mage
+    result: Win
+    type: Ranked
+    datetime: 2015-06-03 12:39:27
+
+  28:
+    deck: Handlock Warlock
+    opponent: Zoo Warlock
+    result: Win
+    type: Ranked
+    datetime: 2015-06-03 14:21:08
+
+  29:
+    deck: Handlock Warlock
+    opponent: Zoo Warlock
+    result: Win
+    type: Ranked
+    datetime: 2015-06-03 14:27:39
+
+  30:
+    deck: Handlock Warlock
+    opponent: Zoo Warlock
+    result: Loss
+    type: Ranked
+    datetime: 2015-06-03 16:10:51
+
+  31:
+    deck: Handlock Warlock
+    opponent: Patron Warrior
+    result: Win
+    type: Ranked
+    datetime: 2015-06-03 16:21:09
+
+  32:
+    deck: Handlock Warlock
+    opponent: Mech Mage
+    result: Loss
+    type: Ranked
+    datetime: 2015-06-03 16:24:49
+
+  33:
+    deck: Handlock Warlock
+    opponent: Aggro Paladin
+    result: Win
+    type: Ranked
+    datetime: 2015-06-03 16:31:15
+
+  34:
+    deck: Handlock Warlock
+    opponent: Combolock Warlock
+    result: Loss
+    type: Ranked
+    datetime: 2015-06-03 17:18:43
+
+  35:
+    deck: Handlock Warlock
+    opponent: Hybrid Hunter
+    result: Win
+    type: Ranked
+    datetime: 2015-06-03 19:04:36
+
+  36:
+    deck: Handlock Warlock
+    opponent: Mech Shaman
+    result: Loss
+    type: Ranked
+    datetime: 2015-06-03 19:09:49
+
+  37:
+    deck: Midrange Paladin
+    opponent: Hybrid Hunter
+    result: Loss
+    type: Ranked
+    datetime: 2015-06-03 19:20:18
+
+  38:
+    deck: Midrange Paladin
+    opponent: Demonlock Warlock
+    result: Loss
+    type: Ranked
+    datetime: 2015-06-03 19:53:14
+
+  39:
+    deck: Midrange Paladin
+    opponent: Patron Warrior
+    result: Loss
+    type: Ranked
+    datetime: 2015-06-03 20:00:39
+
+  40:
+    deck: Handlock Warlock
+    opponent: Mech Mage
+    result: Win
+    type: Ranked
+    datetime: 2015-06-03 20:45:18
+
+  41:
+    deck: Handlock Warlock
+    opponent: Midrange Paladin
+    result: Loss
+    type: Ranked
+    datetime: 2015-06-03 20:49:51
+
+  42:
+    deck: Handlock Warlock
+    opponent: Midrange Paladin
+    result: Loss
+    type: Ranked
+    datetime: 2015-06-03 21:00:05
+
+  43:
+    deck: Handlock Warlock
+    opponent: Face Hunter
+    result: Loss
+    type: Ranked
+    datetime: 2015-06-03 21:03:52
+
+  44:
+    deck: Dragon Druid
+    opponent: Midrange Paladin
+    result: Win
+    type: Ranked
+    datetime: 2015-06-03 21:22:55
+
+  45:
+    deck: Dragon Druid
+    opponent: Mech Rogue
+    result: Win
+    type: Ranked
+    datetime: 2015-06-03 21:32:45
+
+  46:
+    deck: Dragon Druid
+    opponent: Ramp Druid
+    result: Loss
+    type: Ranked
+    datetime: 2015-06-03 21:42:07
+
+  47:
+    deck: Dragon Druid
+    opponent: Control Priest
+    result: Win
+    type: Ranked
+    datetime: 2015-06-03 21:58:54
+
+  48:
+    deck: Dragon Druid
+    opponent: Ramp Druid
+    result: Loss
+    type: Ranked
+    datetime: 2015-06-04 00:01:22
+
+  49:
+    deck: Handlock Warlock
+    opponent: Control Warrior
+    result: Loss
+    type: Ranked
+    datetime: 2015-06-04 00:01:53
+
+  50:
+    deck: Handlock Warlock
+    opponent: Face Hunter
+    result: Win
+    type: Ranked
+    datetime: 2015-06-04 00:12:36
+
+  51:
+    deck: Handlock Warlock
+    opponent: Handlock Warlock
+    result: Win
+    type: Ranked
+    datetime: 2015-06-05 19:29:58
+
+  52:
+    deck: Handlock Warlock
+    opponent: Face Hunter
+    result: Win
+    type: Ranked
+    datetime: 2015-06-05 21:02:13
+
+  53:
+    deck: Handlock Warlock
+    opponent: Mech Mage
+    result: Win
+    type: Ranked
+    datetime: 2015-06-06 12:51:48
+
+  54:
+    deck: Handlock Warlock
+    opponent: Midrange Hunter
+    result: Loss
+    type: Ranked
+    datetime: 2015-06-07 12:19:07
+
+  55:
+    deck: Handlock Warlock
+    opponent: Aggro Paladin
+    result: Win
+    type: Ranked
+    datetime: 2015-06-07 12:25:15
+
+  56:
+    deck: Handlock Warlock
+    opponent: Zoolock Warlock
+    result: Win
+    type: Ranked
+    datetime: 2015-06-07 12:38:05
+
+  57:
+    deck: Handlock Warlock
+    opponent: Face Hunter
+    result: Loss
+    type: Ranked
+    datetime: 2015-06-07 14:29:02
+
+  58:
+    deck: Handlock Warlock
+    opponent: Mech Druid
+    result: Win
+    type: Ranked
+    datetime: 2015-06-07 14:34:52
+
+  59:
+    deck: Handlock Warlock
+    opponent: Handlock Warlock
+    result: Win
+    type: Ranked
+    datetime: 2015-06-07 14:49:18
+
+  60:
+    deck: Handlock Warlock
+    opponent: Face Hunter
+    result: Win
+    type: Ranked
+    datetime: 2015-06-07 16:20:46
+
+  61:
+    deck: Handlock Warlock
+    opponent: Flamewaker Mage
+    result: Win
+    type: Ranked
+    datetime: 2015-06-07 17:03:46
+
+  62:
+    deck: Handlock Warlock
+    opponent: Face Hunter
+    result: Loss
+    type: Ranked
+    datetime: 2015-06-07 18:26:54
+
+  63:
+    deck: Handlock Warlock
+    opponent: Tempo Mage
+    result: Win
+    type: Ranked
+    datetime: 2015-06-07 18:35:42
+
+  64:
+    deck: Handlock Warlock
+    opponent: Face Hunter
+    result: Loss
+    type: Ranked
+    datetime: 2015-06-08 00:14:30

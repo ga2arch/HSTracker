@@ -7,3 +7,4 @@ authors = ["Gabriele Carrettoni <gabriele.carrettoni@gmail.com>"]
 yaml = "*"
 term = "*"
 argparse = "*"
+chrono = "*"

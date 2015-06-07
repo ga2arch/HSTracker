@@ -3,6 +3,7 @@
 extern crate argparse;
 extern crate yaml;
 extern crate term;
+extern crate chrono;
 
 use std::io::prelude::*;
 use std::io::BufReader;
@@ -12,7 +13,9 @@ use std::fmt;
 use yaml::constructor::*;
 use yaml::constructor::YamlStandardData::{YamlMapping, YamlString, YamlInteger};
 
+use std::collections::{HashMap, HashSet};
 use argparse::{ArgumentParser, List};
+use chrono::*;
 
 struct Season {
     num: isize,
@@ -48,6 +51,33 @@ impl Season {
 
         (dms.clone(), winrate)
     }
+
+    fn vs(&self) -> HashMap<String, (usize, f32)> {
+        let mut wrates = HashMap::new();
+        let mut opps = HashSet::new();
+
+        let mut ms = self.matches.to_vec();
+        ms.sort_by(|a, b| a.opponent.cmp(&b.opponent));
+
+        for m in &ms {
+            opps.insert(m.opponent.clone());
+        }
+
+        for o in opps {
+            let dms: Vec<&Match> = self.matches.iter()
+                .filter(|m| lowercase(&m.opponent) == lowercase(&o)).collect();
+
+            let wins: Vec<&&Match> = dms.iter()
+                .filter(|m| m.result == MatchResult::Win).collect();
+
+            let total   = dms.len() as f32;
+            let winrate = (wins.len() as f32) / total * 100.0;
+
+            wrates.insert(o, (dms.len(), winrate,));
+        }
+
+        wrates
+    }
 }
 
 impl fmt::Display for Season {
@@ -65,21 +95,24 @@ impl fmt::Display for Season {
     }
 }
 
+#[derive(Debug, Clone)]
 struct Match {
     id: isize,
     deck: String,
     opponent: String,
     result: MatchResult,
     kind: MatchType,
+    timestamp: DateTime<Local>,
 }
 
 impl Match {
     fn new(id: isize) -> Match {
-        Match { id:       id,
-                deck:     String::new(),
-                opponent: String::new(),
-                result:   MatchResult::Win,
-                kind:     MatchType::Casual }
+        Match { id:        id,
+                deck:      String::new(),
+                opponent:  String::new(),
+                result:    MatchResult::Win,
+                kind:      MatchType::Casual,
+                timestamp: Local::now() }
     }
 }
 
@@ -103,7 +136,7 @@ impl fmt::Display for Match {
     }
 }
 
-#[derive(PartialEq, Eq)]
+#[derive(PartialEq, Eq, Debug, Clone)]
 enum MatchResult {
     Win,
     Loss,
@@ -120,6 +153,7 @@ impl fmt::Display for MatchResult {
     }
 }
 
+#[derive(Debug, Clone)]
 enum MatchType {
     Ranked,
     Casual,
@@ -199,6 +233,8 @@ fn parse_match(id: isize, map: &Vec<(YamlStandardData, YamlStandardData)>) -> Ma
                             "Friendly" => m.kind = MatchType::Friendly,
                             _          => continue,
                         },
+                    "timestamp" => m.timestamp = key.parse::<DateTime<Local>>().unwrap(),
+
                     _ => continue,
                 },
 
@@ -261,7 +297,13 @@ fn main() {
                 }
 
                 println!("\nMatches: {}", data.0.len());
-                println!("Winrate: {}%", data.1);
+                println!("Winrate: {}%\n", data.1);
+
+                let wrates = season.vs();
+
+                for (k, v) in wrates {
+                    println!("{}\t\t {}% {}", k, v.1, v.0);
+                }
             },
 
             "show" => {
