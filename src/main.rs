@@ -89,7 +89,8 @@ impl fmt::Display for Season {
             writeln!(f, "{}", m);
         }
 
-        writeln!(f, "{}", "")
+        writeln!(f, "\nMatches: {}", self.matches.len());
+        writeln!(f, "Winrate: {}%", self.winrate())
     }
 }
 
@@ -289,14 +290,7 @@ fn main() {
 
                 let data = season.deck(&name, &class);
 
-                println!("Matches: ");
-
-                for m in &data.matches {
-                    println!("{}", m);
-                }
-
-                println!("\nMatches: {}", data.matches.len());
-                println!("Winrate: {}%\n", data.winrate());
+                println!("{}", data);
 
                 let wrates = season.vs();
 
@@ -313,29 +307,14 @@ fn main() {
             "today" => {
                 let data = season.time(Local::now());
 
-                println!("Matches: ");
-
-                for m in &data.matches {
-                    
-                    println!("{}", m);
-                }
-
-                println!("\nMatches: {}", data.matches.len());
-                println!("Winrate: {}%\n", data.winrate());
+                println!("{}", data);
             }
 
             "yesterday" => {
                 let date = Local::now().checked_sub(Duration::days(1)).unwrap();
                 let data = season.time(date);
 
-                println!("Matches: ");
-
-                for m in &data.matches {
-                    println!("{}", m);
-                }
-
-                println!("\nMatches: {}", data.matches.len());
-                println!("Winrate: {}%\n", data.winrate());
+                println!("{}", data);
             }
 
             _ => println!("Command unknown"),
