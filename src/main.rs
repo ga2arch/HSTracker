@@ -37,19 +37,13 @@ impl Season {
         winrate
     }
 
-    fn deck(&self, name: &String, class: &String) -> (Vec<&Match>, f32)  {
+    fn deck(&self, name: &String, class: &String) -> Season  {
         let deck = lowercase(&format!("{} {}", name, class));
 
-        let dms: Vec<&Match> = self.matches.iter()
+        let dms: Vec<Match> = self.matches.clone().into_iter()
             .filter(|m| lowercase(&m.deck) == deck).collect();
 
-        let wins: Vec<&&Match> = dms.iter()
-            .filter(|m| m.result == MatchResult::Win).collect();
-
-        let total   = dms.len() as f32;
-        let winrate = (wins.len() as f32) / total * 100.0;
-
-        (dms.clone(), winrate)
+        Season::new(self.num, dms)
     }
 
     fn vs(&self) -> HashMap<String, (usize, f32)> {
@@ -78,17 +72,21 @@ impl Season {
 
         wrates
     }
+
+    fn time(&self, ts: DateTime<Local>) -> Season {
+        let dms: Vec<Match> = self.matches.clone().into_iter()
+            .filter(|m| (m.datetime.day(), m.datetime.month()) == (ts.day(), ts.month())).collect();
+
+        Season::new(self.num, dms)
+    }
 }
 
 impl fmt::Display for Season {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let mut t = term::stdout().unwrap();
         writeln!(f, "{}", format!("Season {}", self.num));
 
         for m in &self.matches {
-
             writeln!(f, "{}", m);
-
         }
 
         writeln!(f, "{}", "")
@@ -102,7 +100,7 @@ struct Match {
     opponent: String,
     result: MatchResult,
     kind: MatchType,
-    timestamp: DateTime<Local>,
+    datetime: DateTime<Local>,
 }
 
 impl Match {
@@ -112,7 +110,7 @@ impl Match {
                 opponent:  String::new(),
                 result:    MatchResult::Win,
                 kind:      MatchType::Casual,
-                timestamp: Local::now() }
+                datetime:  Local::now() }
     }
 }
 
@@ -233,7 +231,8 @@ fn parse_match(id: isize, map: &Vec<(YamlStandardData, YamlStandardData)>) -> Ma
                             "Friendly" => m.kind = MatchType::Friendly,
                             _          => continue,
                         },
-                    "timestamp" => m.timestamp = key.parse::<DateTime<Local>>().unwrap(),
+                    "datetime" =>
+                        m.datetime = Local.datetime_from_str(value, "%Y-%m-%d %H:%M:%S").unwrap(),
 
                     _ => continue,
                 },
@@ -292,12 +291,12 @@ fn main() {
 
                 println!("Matches: ");
 
-                for m in &data.0 {
+                for m in &data.matches {
                     println!("{}", m);
                 }
 
-                println!("\nMatches: {}", data.0.len());
-                println!("Winrate: {}%\n", data.1);
+                println!("\nMatches: {}", data.matches.len());
+                println!("Winrate: {}%\n", data.winrate());
 
                 let wrates = season.vs();
 
@@ -310,6 +309,33 @@ fn main() {
                 print!("{}", season);
                 println!("Total Winrate: {}%", season.winrate());
             },
+
+            "today" => {
+                let data = season.time(Local::now());
+
+                println!("Matches: ");
+
+                for m in &data.matches {
+                    println!("{}", m);
+                }
+
+                println!("\nMatches: {}", data.matches.len());
+                println!("Winrate: {}%\n", data.winrate());
+            }
+
+            "yesterday" => {
+                let date = Local::now().checked_sub(Duration::days(1)).unwrap();
+                let data = season.time(date);
+
+                println!("Matches: ");
+
+                for m in &data.matches {
+                    println!("{}", m);
+                }
+
+                println!("\nMatches: {}", data.matches.len());
+                println!("Winrate: {}%\n", data.winrate());
+            }
 
             _ => println!("Command unknown"),
         }
